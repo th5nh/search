@@ -20,7 +20,7 @@ class Edge :
             if e2 > -dy:
                 err -= dy
                 x1 += sx
-            if e2 < dx:
+            elif e2 < dx:
                 err += dx
                 y1 += sy
         edgePoints.append(EdgePoint(Coordinate(x2, y2)))
