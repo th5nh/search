@@ -17,12 +17,21 @@ class Edge :
         while x1 != x2 or y1 != y2:
             edgePoints.append(EdgePoint(Coordinate(x1, y1)))
             e2 = 2 * err
-            if e2 > -dy:
-                err -= dy
-                x1 += sx
-            elif e2 < dx:
-                err += dx
-                y1 += sy
+
+            if (e2 > -dy and e2 < dx):
+                if(dy > dx) :
+                    err -= dy
+                    x1 += sx
+                else:
+                    err += dx
+                    y1 += sy
+            else :
+                if e2 > -dy:
+                    err -= dy
+                    x1 += sx
+                if e2 < dx:
+                    err += dx
+                    y1 += sy
         edgePoints.append(EdgePoint(Coordinate(x2, y2)))
         return edgePoints
     def display (self): 
