@@ -50,7 +50,7 @@ class Matrix :
         graph = self.endPoint.draw(graph) 
         return graph
     def display (self) : 
-        for y in range (self.height, -1, -1) :             
+        for y in range (0,self.height+1, 1) :             
             for x in range(0 , self.width + 1, 1) : 
                 self.graph[y][x].display()
             print('')
@@ -60,8 +60,9 @@ class Matrix :
 
 
 myMatrix = Matrix () 
-myMatrix.parseFile('input.txt')
+myMatrix.parseFile('input_1.txt')
 myMatrix.display()
+
 
 
 

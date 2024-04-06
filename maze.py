@@ -1,19 +1,24 @@
 import pygame
 from const import *
 import random
-import sys 
-sys.path.append('../the-struct/point.py')
-
+from model_matrix import myMatrix
+from model_point import Point
 # you can change the random seed but when you submit your work, it should be run on my random seed!
-random.seed(2345)
+# random.seed(2345)
 #random.seed(142857) # no path seed
 
+COLS, ROWS = myMatrix.width+1, myMatrix.height+1
+
+RES = WIDTH, HEIGHT = 800+2*BOUND + (ROWS-1)*(A1), 800+2*BOUND + (COLS-1)*(A1)
+
 class Node:
-    def __init__(self, x, y, a, id, is_brick=False) -> None:
-        self.rect = pygame.Rect(x, y, a, a)
-        self.is_brick = is_brick
-        self.color = BLACK if self.is_brick else WHITE
+    def __init__(self, point, a, id) -> None:
+        
+        self.rect = pygame.Rect(point.x *(A+A1) + BOUND, point.y *(A+A1)+BOUND, a, a)
+
+        self.color = point.color
         self.id = id
+        self.is_brick = point.isBlock
 
     def draw(self, sc:pygame.Surface) -> None:
         pygame.draw.rect(sc, self.color, self.rect)
@@ -32,12 +37,23 @@ class Node:
 class SearchSpace:
     def __init__(self) -> None:
         self.grid_cells:list[Node] = []
-        for i in range(ROWS):
-            for j in range(COLS):
+        for i in range(0,ROWS):
+            for j in range(0, COLS):
                 # define the brick's appearing
-                is_brick = True if random.randint(1,3) == 1 else False
-                self.grid_cells.append(Node(j*(A+A1)+BOUND, i*(A+A1)+BOUND, A, i*COLS+j, is_brick))
+                node = myMatrix.graph[i][j]
+                self.grid_cells.append(Node(node, A,i*COLS + j))
+        
+        start_id = myMatrix.startPoint.y*COLS+myMatrix.startPoint.x
+        end_id = myMatrix.endPoint.y*COLS+myMatrix.endPoint.x
 
+        # self.start:Node = self.grid_cells[start_id]
+        # self.start.id = start_id
+        # self.start.is_brick = False
+        # self.start._set_color(ORANGE)
+        # self.goal:Node = self.grid_cells[end_id]
+        # self.goal.is_brick = False
+        # self.goal.id = end_id
+        # self.goal._set_color(PURPLE)
         self.start:Node = self.grid_cells[0]
         self.start.is_brick = False
         self.start._set_color(ORANGE)
@@ -45,9 +61,24 @@ class SearchSpace:
         self.goal.is_brick = False
         self.goal._set_color(PURPLE)
 
+        self.font = pygame.font.SysFont('Aral', 15) 
+
+        #add text to wall : 
+
+        
+
     def draw(self, sc:pygame.Surface):
         for node in self.grid_cells:
             node.draw(sc)
+        
+        
+        for i in range(COLS) : 
+            label = self.font.render(str(i) ,True, WHITE )
+            sc.blit(label , (self.grid_cells[i].rect.center))
+
+        for i in range (ROWS) : 
+            label = self.font.render(str(i) ,True, WHITE )
+            sc.blit(label , (self.grid_cells[i*COLS].rect.center))            
         pygame.display.flip()
 
     def get_length(self):

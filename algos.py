@@ -19,6 +19,7 @@ def DFS(g: SearchSpace, sc: pygame.Surface):
         # check current node is the goal (Loop condition)
         if g.is_goal(curNode):
             curNode.set_color(PURPLE, sc)
+            return
             break
         # set color for current node and find neighbors
         curNode.set_color(YELLOW, sc)

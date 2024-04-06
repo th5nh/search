@@ -1,18 +1,15 @@
 import pygame
-from maze import SearchSpace
+from maze import SearchSpace, RES
 from algos import DFS, BFS, UCS, AStar, Greedy
-from const import RES, GREY
+from const import GREY
 import argparse
 
 def main(algo:str):
     your_name = 'Nguyen Vu Thanh - 21120335'
-
-    
-
-
     pygame.init()
     pygame.display.set_caption(f'{your_name} - {algo}')
     sc = pygame.display.set_mode(RES)
+    print(RES)
     clock = pygame.time.Clock()
     sc.fill(pygame.color.Color(GREY))
 
