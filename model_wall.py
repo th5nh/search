@@ -34,5 +34,3 @@ class Wall :
             matrix = point.draw(matrix)
         return matrix
 
-
-myWall = Wall(18,22)

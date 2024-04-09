@@ -19,7 +19,6 @@ def DFS(g: SearchSpace, sc: pygame.Surface):
         # check current node is the goal (Loop condition)
         if g.is_goal(curNode):
             curNode.set_color(PURPLE, sc)
-            return
             break
         # set color for current node and find neighbors
         curNode.set_color(YELLOW, sc)
@@ -33,8 +32,7 @@ def DFS(g: SearchSpace, sc: pygame.Surface):
         # then close current node and set BLUE for it
         closed_set.append(curNode.id)
         curNode.set_color(BLUE, sc) if curNode != g.start else curNode.set_color(ORANGE, sc)
-        
-    # Draw path 
+
     drawPath(father, g, sc)
 
 

@@ -1,15 +1,13 @@
 import pygame
 from const import *
 import random
-from model_matrix import myMatrix
+from model_matrix import Matrix
 from model_point import Point
+
 # you can change the random seed but when you submit your work, it should be run on my random seed!
 # random.seed(2345)
-#random.seed(142857) # no path seed
 
-COLS, ROWS = myMatrix.width+1, myMatrix.height+1
 
-RES = WIDTH, HEIGHT = 800+2*BOUND + (ROWS-1)*(A1), 800+2*BOUND + (COLS-1)*(A1)
 
 class Node:
     def __init__(self, point, a, id) -> None:
@@ -35,16 +33,17 @@ class Node:
         pygame.display.update()
 
 class SearchSpace:
-    def __init__(self) -> None:
+    def __init__(self, myMatrix : Matrix) -> None:
+        self.COLS, self.ROWS= myMatrix.width+1, myMatrix.height+1
         self.grid_cells:list[Node] = []
-        for i in range(0,ROWS):
-            for j in range(0, COLS):
+        for i in range(0,self.ROWS):
+            for j in range(0, self.COLS):
                 # define the brick's appearing
                 node = myMatrix.graph[i][j]
-                self.grid_cells.append(Node(node, A,i*COLS + j))
+                self.grid_cells.append(Node(node, A,i*self.COLS + j))
         
-        start_id = myMatrix.startPoint.y*COLS+myMatrix.startPoint.x
-        end_id = myMatrix.endPoint.y*COLS+myMatrix.endPoint.x
+        start_id = myMatrix.startPoint.y*self.COLS+myMatrix.startPoint.x
+        end_id = myMatrix.endPoint.y*self.COLS+myMatrix.endPoint.x
 
         # self.start:Node = self.grid_cells[start_id]
         # self.start.id = start_id
@@ -72,13 +71,13 @@ class SearchSpace:
             node.draw(sc)
         
         
-        for i in range(COLS) : 
+        for i in range(self.COLS) : 
             label = self.font.render(str(i) ,True, WHITE )
             sc.blit(label , (self.grid_cells[i].rect.center))
 
-        for i in range (ROWS) : 
+        for i in range (self.ROWS) : 
             label = self.font.render(str(i) ,True, WHITE )
-            sc.blit(label , (self.grid_cells[i*COLS].rect.center))            
+            sc.blit(label , (self.grid_cells[i*self.COLS].rect.center))            
         pygame.display.flip()
 
     def get_length(self):
@@ -88,18 +87,18 @@ class SearchSpace:
         return node.id == self.goal.id
 
     def get_neighbors(self, node: Node) -> list[Node]:
-        x, y = node.id%COLS, node.id//COLS
+        x, y = node.id%self.COLS, node.id//self.COLS
 
         # define the directions of agent
-        up    = (y-1)*COLS + x if y-1 >= 0 else None
-        down  = (y+1)*COLS + x if y+1 < ROWS else None
-        left  = y*COLS + (x-1) if x-1 >= 0 else None
-        right = y*COLS + (x+1) if x+1 < COLS else None
+        up    = (y-1)*self.COLS + x if y-1 >= 0 else None
+        down  = (y+1)*self.COLS + x if y+1 < self.ROWS else None
+        left  = y*self.COLS + (x-1) if x-1 >= 0 else None
+        right = y*self.COLS + (x+1) if x+1 < self.COLS else None
 
-        left_up = (y-1)*COLS + (x-1) if y-1 >= 0 and x-1 >= 0 else None
-        left_down = (y+1)*COLS + (x-1) if y+1 < ROWS and x-1 >= 0 else None
-        right_up = (y-1)*COLS + (x+1) if y-1 >= 0 and x+1 < COLS else None
-        right_down = (y+1)*COLS + (x+1) if y+1 < ROWS and x+1 < COLS else None
+        left_up = (y-1)*self.COLS + (x-1) if y-1 >= 0 and x-1 >= 0 else None
+        left_down = (y+1)*self.COLS + (x-1) if y+1 < self.ROWS and x-1 >= 0 else None
+        right_up = (y-1)*self.COLS + (x+1) if y-1 >= 0 and x+1 < self.COLS else None
+        right_down = (y+1)*self.COLS + (x+1) if y+1 < self.ROWS and x+1 < self.COLS else None
 
         directions = [up, down, left, right, left_up, left_down, right_up, right_down]
         # directions = [up, down, left, right]

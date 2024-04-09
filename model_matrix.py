@@ -60,7 +60,7 @@ class Matrix :
 
 
 myMatrix = Matrix () 
-myMatrix.parseFile('input_1.txt')
+myMatrix.parseFile('input.txt')
 myMatrix.display()
 
 
