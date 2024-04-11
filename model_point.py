@@ -80,4 +80,10 @@ class EndPoint(Point) :
         super().__init__(coor)
         self.color = color 
         self.symbol = 'e'
+        
+class StationPoint(Point) :
+    def __init__(self, coor=Coordinate(), color = GREEN):
+        super().__init__(coor)
+        self.color = color
+        self.symbol = 't'
 

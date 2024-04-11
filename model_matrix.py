@@ -1,6 +1,6 @@
 from model_wall import Wall 
 from model_polygon import Polygon
-from model_point import StartPoint, EndPoint 
+from model_point import StartPoint, EndPoint, StationPoint
 from coordinate import Coordinate
 from model_point import Point
 import sys 
@@ -19,10 +19,15 @@ class Matrix :
             
             startCoor = Coordinate(fromToCoors[0] , fromToCoors[1])
             endCoor = Coordinate(fromToCoors[2], fromToCoors[3])
+            stationCoor_1 = Coordinate(fromToCoors[4], fromToCoors[5])
+            stationCoor_2 = Coordinate(fromToCoors[6], fromToCoors[7])
 
             #define start end point 
             self.startPoint = StartPoint(startCoor) 
             self.endPoint = EndPoint(endCoor) 
+            self.stationPoint_1 = StationPoint(stationCoor_1)
+            self.stationPoint_2 = StationPoint(stationCoor_2)
+            
 
             #defin wall 
             self.border = Wall(self.height, self.width)
@@ -48,6 +53,10 @@ class Matrix :
         graph = self.border.draw(graph) 
         graph = self.startPoint.draw(graph) 
         graph = self.endPoint.draw(graph) 
+        
+        graph = self.stationPoint_1.draw(graph)
+        graph = self.stationPoint_2.draw(graph)
+        
         return graph
     def display (self) : 
         for y in range (0,self.height+1, 1) :             

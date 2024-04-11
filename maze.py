@@ -44,11 +44,24 @@ class SearchSpace:
         
         start_id = myMatrix.startPoint.y*self.COLS+myMatrix.startPoint.x
         end_id = myMatrix.endPoint.y*self.COLS+myMatrix.endPoint.x
+        station_1_id = myMatrix.stationPoint_1.y*self.COLS+myMatrix.stationPoint_1.x
+        station_2_id = myMatrix.stationPoint_2.y*self.COLS+myMatrix.stationPoint_2.x
 
         self.start:Node = self.grid_cells[start_id]
         self.start.id = start_id
         self.start.is_brick = False
         self.start._set_color(ORANGE)
+        
+        self.station_1:Node = self.grid_cells[station_1_id]
+        self.station_1.is_brick = False
+        self.station_1.id = station_1_id
+        self.station_1._set_color(GREEN)
+        
+        self.station_2:Node = self.grid_cells[station_2_id]
+        self.station_2.is_brick = False
+        self.station_2.id = station_2_id
+        self.station_2._set_color(GREEN)
+        
         self.goal:Node = self.grid_cells[end_id]
         self.goal.is_brick = False
         self.goal.id = end_id
