@@ -45,20 +45,20 @@ class SearchSpace:
         start_id = myMatrix.startPoint.y*self.COLS+myMatrix.startPoint.x
         end_id = myMatrix.endPoint.y*self.COLS+myMatrix.endPoint.x
 
-        # self.start:Node = self.grid_cells[start_id]
-        # self.start.id = start_id
-        # self.start.is_brick = False
-        # self.start._set_color(ORANGE)
-        # self.goal:Node = self.grid_cells[end_id]
-        # self.goal.is_brick = False
-        # self.goal.id = end_id
-        # self.goal._set_color(PURPLE)
-        self.start:Node = self.grid_cells[0]
+        self.start:Node = self.grid_cells[start_id]
+        self.start.id = start_id
         self.start.is_brick = False
         self.start._set_color(ORANGE)
-        self.goal:Node = self.grid_cells[-1]
+        self.goal:Node = self.grid_cells[end_id]
         self.goal.is_brick = False
+        self.goal.id = end_id
         self.goal._set_color(PURPLE)
+        # self.start:Node = self.grid_cells[0]
+        # self.start.is_brick = False
+        # self.start._set_color(ORANGE)
+        # self.goal:Node = self.grid_cells[-1]
+        # self.goal.is_brick = False
+        # self.goal._set_color(PURPLE)
 
         self.font = pygame.font.SysFont('Aral', 15) 
 

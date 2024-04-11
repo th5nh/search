@@ -25,7 +25,7 @@ def main(algo:str, inputFile: str = 'input.txt'):
     g = SearchSpace(myMatrix)
 
     g.draw(sc)
-    clock.tick(200)
+    clock.tick(20)
 
     if algo == 'DFS':
         DFS(g, sc)
@@ -33,9 +33,9 @@ def main(algo:str, inputFile: str = 'input.txt'):
         BFS(g, sc)
     elif algo == 'UCS':
         UCS(g, sc)
-    elif algo == 'AStar':
+    elif algo == 'ASTAR':
         AStar(g, sc)
-    elif algo == 'Greedy':
+    elif algo == 'GREEDY':
         Greedy(g, sc)
     else:
         raise NotImplementedError('Not implemented')

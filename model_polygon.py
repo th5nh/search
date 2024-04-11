@@ -1,7 +1,7 @@
 from coordinate import Coordinate 
 from model_point import EdgePoint , VertexPoint 
 from model_edge import Edge
-
+import copy
 class Polygon : 
     def __init__(self, coors) -> None:
         # An array of vertices that have VertexPo
@@ -29,3 +29,10 @@ class Polygon :
         for v in self.vertices : 
             matrix = v.draw(matrix) 
         return matrix
+    def __copy__ (self) : 
+        to_copy = Polygon() ; 
+        for ver in self.vertices : 
+            to_copy.vertices.append(copy.copy(ver)) 
+        for edge in self.edges : 
+            to_copy.edges.append(copy.copy(edge)) 
+            

@@ -65,9 +65,10 @@ def BFS(g: SearchSpace, sc: pygame.Surface):
                 open_set.append(nb.id)
                 father[nb.id] = curID
         # then close current node and set BLUE for it
-        closed_set.append(curNode.id)
-        curNode.set_color(BLUE, sc) if curNode != g.start else curNode.set_color(ORANGE, sc)
         
+        curNode.set_color(BLUE, sc) if curNode != g.start else curNode.set_color(ORANGE, sc)
+
+        closed_set.append(curNode.id)
     # Draw path 
     drawPath(father, g, sc)
 
@@ -245,7 +246,7 @@ def getDistance(A, B):
 def drawPath(listFather, g: SearchSpace, sc: pygame.Surface):
     pathNode = g.get_length() - 1
     while True:
-        if (pathNode == g.start.id): # loop condition
+        if (pathNode == g.start.id and pathNode == g.goal.id): # loop condition
             break
         # value to align center of the rectangle 26 x 26
         center = abs(g.start.rect.x - g.grid_cells[1].rect.x) / 2 # that is 13

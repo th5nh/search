@@ -8,7 +8,7 @@ import sys
 class Matrix : 
     def __init__(self) -> None:
         pass
-    def parseFile (self, fileName) : 
+    def parseFile (self, fileName :str ) : 
         sys.stdin = open (fileName, 'r')
         with open (fileName ,'r') as file :
             lines = file.readlines()
@@ -54,14 +54,8 @@ class Matrix :
             for x in range(0 , self.width + 1, 1) : 
                 self.graph[y][x].display()
             print('')
-
-        
-                 
-
-
-myMatrix = Matrix () 
-myMatrix.parseFile('input.txt')
-myMatrix.display()
+    def copy(self) : 
+        pass
 
 
 
