@@ -134,7 +134,7 @@ def AStar(g: SearchSpace, sc: pygame.Surface):
 
     open_set = [(0, 0, g.start.id)] # (f_cost, h_cost, id) sort by f_cost then h_cost
     closed_set = []
-    father = [-1]*g.get_length()
+    father = [g.goal.id]*g.get_length()
     cost = [100_000]*g.get_length() # g_cost
     cost[g.start.id] = 0
 
@@ -182,6 +182,7 @@ def AStar(g: SearchSpace, sc: pygame.Surface):
         closed_set.append(curNode.id)
         curNode.set_color(BLUE, sc) if curNode != g.start else curNode.set_color(ORANGE, sc)       
     # Draw path 
+    print(cost)
     drawPath(father, g, sc)
 
 
@@ -229,6 +230,7 @@ def Greedy(g: SearchSpace, sc: pygame.Surface):
         curNode.set_color(BLUE, sc) if curNode != g.start else curNode.set_color(ORANGE, sc)   
 
     # Draw path 
+    
     drawPath(father, g, sc)
 
 
@@ -244,9 +246,14 @@ def getDistance(A, B):
 
 # Draw path according to father list (draw from the goal to the start node)
 def drawPath(listFather, g: SearchSpace, sc: pygame.Surface):
-    pathNode = g.get_length() - 1
+    print ('Drawing path')
+    # pathNode = g.get_length() -1 
+    pathNode = g.goal.id
+    see_goal = 1
+    see_start = 0
+    # for i in range(10):
     while True:
-        if (pathNode == g.start.id and pathNode == g.goal.id): # loop condition
+        if (pathNode == g.start.id): # loop condition
             break
         # value to align center of the rectangle 26 x 26
         center = abs(g.start.rect.x - g.grid_cells[1].rect.x) / 2 # that is 13
