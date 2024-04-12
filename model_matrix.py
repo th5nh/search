@@ -16,16 +16,15 @@ class Matrix :
             self.width = int(size[0])
             self.height = int(size[1])
             fromToCoors = lines[1].split(',')
-            
+            self.haveStations = False
             startCoor = Coordinate(fromToCoors[0] , fromToCoors[1])
             endCoor = Coordinate(fromToCoors[2], fromToCoors[3])
-            stationCoor_1 = Coordinate(fromToCoors[4], fromToCoors[5])
 
             #define start end point 
             self.startPoint = StartPoint(startCoor) 
             self.endPoint = EndPoint(endCoor) 
 
-            if (len (fromToCoors) > 4 ) :
+            if (len (fromToCoors) > 4) :
                 self.haveStations = True
                 stationCoor_1 = Coordinate(fromToCoors[4], fromToCoors[5])
                 stationCoor_2 = Coordinate(fromToCoors[6], fromToCoors[7])
@@ -56,9 +55,9 @@ class Matrix :
         graph = self.border.draw(graph) 
         graph = self.startPoint.draw(graph) 
         graph = self.endPoint.draw(graph) 
-
-        graph = self.stationPoint_1.draw(graph)
-        graph = self.stationPoint_2.draw(graph)
+        if (self.haveStations == True):
+            graph = self.stationPoint_1.draw(graph)
+            graph = self.stationPoint_2.draw(graph)
 
         return graph
     def display (self) : 
