@@ -72,55 +72,70 @@ def BFS(g: SearchSpace, sc: pygame.Surface):
     # Draw path 
     drawPath(father, g, sc)
 
+        
 def BFSWithStations(g: SearchSpace, sc: pygame.Surface):
+    # Color for consistency
+    startNode = g.grid_cells[g.start.id]
+    goalNode = g.grid_cells[g.goal.id]
+    
     # Initialize the open set with the start node
     open_set = [g.start.id]
+    
     # Initialize the closed set as empty
     closed_set = []
-    # Initialize the father list
-    father = [g.goal.id]*g.get_length()
     
-    collect = 0 
-
+    # Initialize the father list
+    father = [-1]*g.get_length()
+    
+    collect = 0 # Number of stations collected
+    
     while open_set:
+        # Set color for start node, goal node
+        startNode.set_color(ORANGE, sc)
+        goalNode.set_color(PURPLE, sc)
+        
         # Get the current node from the open set
         curID = open_set.pop(0)
         curNode = g.grid_cells[curID]
-
+        
         # Check if the current node is a station
         if g.is_station(curNode) and not curNode.reached:
             curNode.reached = True
             drawPathForStations(g, sc, father, g.start.id, curNode.id)
-            father = [g.goal.id]*g.get_length()
+            closed_set = []
+            father = [-1]*g.get_length()
             father[curNode.id] = curID
             g.start = curNode
             open_set = [curNode.id]
-            collect += 1
+            collect = collect + 1
             continue
 
         # Check if the current node is the goal
         if g.is_goal(curNode):
             curNode.set_color(PURPLE, sc)
-            if (collect < 3):
-                collect+=1
+            if (collect < 2):
                 continue
-        if collect == 3 : 
-            drawPathForStations(g, sc, father, g.start.id, g.goal.id)
-            break
-        # Set color for current node and find neighbors
-        curNode.set_color(YELLOW, sc)
+            else: # collect == 2
+                drawPathForStations(g, sc, father, g.start.id, curNode.id)
+                break
+        
+        # Get the neighbors of the current node
         nbs = g.get_neighbors(curNode)
 
-        # Open each neighbor and set RED for them
+        # Open each neighbor
         for nb in nbs:
             if (nb.id not in closed_set) and (nb.id not in open_set):
-                nb.set_color(RED, sc)
                 open_set.append(nb.id)
                 father[nb.id] = curID
 
-        # Then close current node and set BLUE for it
-        curNode.set_color(BLUE, sc)
+        # Set color for the current node if it is the station node (reached)
+        if g.is_station(curNode):
+            curNode.set_color(GREEN, sc)
         closed_set.append(curID)
+    
+    
+
+
 
 
 def UCS(g: SearchSpace, sc: pygame.Surface):
@@ -337,6 +352,6 @@ def drawPathForStations(g: SearchSpace, sc: pygame.Surface, father: list, start_
             x_end = g.grid_cells[father[pathNode]].rect.x + center
             y_end = g.grid_cells[father[pathNode]].rect.y + center
             # draw
-            pygame.draw.line(sc, WHITE, (x_start, y_start), (x_end, y_end), 3)
+            pygame.draw.line(sc, BLACK, (x_start, y_start), (x_end, y_end), 3)
             pygame.display.update()
             pygame.time.delay(30)
