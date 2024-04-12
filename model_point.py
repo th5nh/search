@@ -22,7 +22,6 @@ class Point :
             return matrix  
         except : 
             print(self.coor.y, self.coor.x)
-            print (matrix[1][22])
     
     #get neighbor 
     def getNeighbour (self, graph:list) : 
@@ -68,6 +67,12 @@ class VertexPoint(Point) :
         self.color = color 
         self.symbol = 'v'
         self.isBlock = True
+
+class StationPoint(Point) :
+    def __init__(self, coor=Coordinate(), color = GREEN):
+        super().__init__(coor)
+        self.color = color
+        self.symbol = 't'
     
 class StartPoint(Point) : 
     def __init__(self, coor=Coordinate(), color = RED):

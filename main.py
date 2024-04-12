@@ -1,9 +1,12 @@
 import pygame
 from maze import SearchSpace
-from algos import DFS, BFS, UCS, AStar, Greedy
+from algos import DFS, BFS, UCS, AStar, Greedy, BFSWithStations
 from const import GREY, BOUND , A1
 from model_matrix import Matrix
 import argparse
+import os
+import sys
+script_directory = os.path.dirname(os.path.abspath(sys.argv[0])) 
 
 def main(algo:str, inputFile: str = 'input.txt'):
     your_name = 'Nguyen Vu Thanh - 21120335'
@@ -12,7 +15,7 @@ def main(algo:str, inputFile: str = 'input.txt'):
 
     #initialize map 
     myMatrix = Matrix() 
-    myMatrix.parseFile(inputFile)
+    myMatrix.parseFile(script_directory + "\\input_files\\"+ inputFile)
     COLS, ROWS= myMatrix.width+1, myMatrix.height+1
     RES = WIDTH , HEIGHT = 800+2*BOUND + (ROWS-1)*(A1), 800+2*BOUND + (COLS-1)*(A1)
 
@@ -37,6 +40,8 @@ def main(algo:str, inputFile: str = 'input.txt'):
         AStar(g, sc)
     elif algo == 'GREEDY':
         Greedy(g, sc)
+    elif algo == 'BFSWITHSTATIONS':
+        BFSWithStations(g,sc)
     else:
         raise NotImplementedError('Not implemented')
 
