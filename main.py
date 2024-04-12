@@ -14,16 +14,16 @@ def main(algo:str, inputFile: str = 'input.txt'):
     pygame.display.set_caption(f'{your_name} - {algo}')
 
     #initialize map 
-    myMatrix = Matrix() 
+    myMatrix = Matrix()
     myMatrix.parseFile(script_directory + "\\input_files\\"+ inputFile)
     COLS, ROWS= myMatrix.width+1, myMatrix.height+1
-    RES = WIDTH , HEIGHT = 800+2*BOUND + (ROWS-1)*(A1), 800+2*BOUND + (COLS-1)*(A1)
+    #RES = WIDTH , HEIGHT = 800+2*BOUND + (ROWS-1)*(A1), 800+2*BOUND + (COLS-1)*(A1)
+    RES = WIDTH , HEIGHT = 1350, 700
 
     sc = pygame.display.set_mode(RES)
-    print(RES)
+    #print(RES)
     clock = pygame.time.Clock()
     sc.fill(pygame.color.Color(GREY))
-
 
     g = SearchSpace(myMatrix)
 
