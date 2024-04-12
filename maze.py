@@ -56,13 +56,14 @@ class SearchSpace:
         self.station_1.id = station_1_id
         self.station_1.is_brick = False     
         self.station_1._set_color(GREEN)
-        self.station_1.reached = False  # Add this line
+        self.station_1.reached = False
         
         self.station_2:Node = self.grid_cells[station_2_id]
         self.station_2.id = station_2_id
         self.station_2.is_brick = False
         self.station_2._set_color(GREEN)
-        self.station_2.reached = False  # Add this line
+        self.station_2.reached = False
+        
         
         self.goal:Node = self.grid_cells[end_id]
         self.goal.is_brick = False

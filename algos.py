@@ -33,7 +33,7 @@ def DFS(g: SearchSpace, sc: pygame.Surface):
         closed_set.append(curNode.id)
         curNode.set_color(BLUE, sc) if curNode != g.start else curNode.set_color(ORANGE, sc)
 
-    # drawPath(father, g, sc)
+    drawPath(father, g, sc)
 
 
 def BFS(g: SearchSpace, sc: pygame.Surface):
@@ -72,6 +72,7 @@ def BFS(g: SearchSpace, sc: pygame.Surface):
         closed_set.append(curNode.id)
     # Draw path 
     drawPath(father, g, sc)
+    
     
 def BFSWithStations(g: SearchSpace, sc: pygame.Surface):
     # Initialize the open set with the start node
@@ -116,9 +117,6 @@ def BFSWithStations(g: SearchSpace, sc: pygame.Surface):
         # Then close current node and set BLUE for it
         curNode.set_color(BLUE, sc)
         closed_set.append(curID)
-    
-
-
 
 
 def UCS(g: SearchSpace, sc: pygame.Surface):
@@ -322,6 +320,7 @@ def drawPath(listFather, g: SearchSpace, sc: pygame.Surface):
         pygame.display.update()
         pygame.time.delay(30)   
 
+# 
 def drawPathForStations(g: SearchSpace, sc: pygame.Surface, father: list, start_id: int, end_id: int):
     path = []
     temp = end_id
