@@ -33,7 +33,7 @@ def DFS(g: SearchSpace, sc: pygame.Surface):
         closed_set.append(curNode.id)
         curNode.set_color(BLUE, sc) if curNode != g.start else curNode.set_color(ORANGE, sc)
 
-    drawPath(father, g, sc)
+    # drawPath(father, g, sc)
 
 
 def BFS(g: SearchSpace, sc: pygame.Surface):
@@ -57,6 +57,7 @@ def BFS(g: SearchSpace, sc: pygame.Surface):
             break
         # set color for current node and find neighbors
         curNode.set_color(YELLOW, sc)
+        
         nbs = g.get_neighbors(curNode)
         # open each neighbor and set RED for them
         for nb in nbs:
@@ -71,6 +72,53 @@ def BFS(g: SearchSpace, sc: pygame.Surface):
         closed_set.append(curNode.id)
     # Draw path 
     drawPath(father, g, sc)
+    
+def BFSWithStations(g: SearchSpace, sc: pygame.Surface):
+    # Initialize the open set with the start node
+    open_set = [g.start.id]
+    # Initialize the closed set as empty
+    closed_set = []
+    # Initialize the father list
+    father = [-1]*g.get_length()
+
+    while open_set:
+        # Get the current node from the open set
+        curID = open_set.pop(0)
+        curNode = g.grid_cells[curID]
+
+        # Check if the current node is a station
+        if g.is_station(curNode) and not curNode.reached:
+            curNode.reached = True
+            drawPathForStations(g, sc, father, g.start.id, curNode.id)
+            father = [-1]*g.get_length()
+            father[curNode.id] = curID
+            g.start = curNode
+            open_set = [curNode.id]
+            continue
+
+        # Check if the current node is the goal
+        if g.is_goal(curNode):
+            curNode.set_color(PURPLE, sc)
+            drawPathForStations(g, sc, father, g.start.id, curNode.id)
+            break
+
+        # Set color for current node and find neighbors
+        curNode.set_color(YELLOW, sc)
+        nbs = g.get_neighbors(curNode)
+
+        # Open each neighbor and set RED for them
+        for nb in nbs:
+            if (nb.id not in closed_set) and (nb.id not in open_set):
+                nb.set_color(RED, sc)
+                open_set.append(nb.id)
+                father[nb.id] = curID
+
+        # Then close current node and set BLUE for it
+        curNode.set_color(BLUE, sc)
+        closed_set.append(curID)
+    
+
+
 
 
 def UCS(g: SearchSpace, sc: pygame.Surface):
@@ -227,11 +275,15 @@ def Greedy(g: SearchSpace, sc: pygame.Surface):
         open_set = sorted(open_set, key=lambda x: (x[0]))
         # then close current node and set BLUE for it
         closed_set.append(curNode.id)
-        curNode.set_color(BLUE, sc) if curNode != g.start else curNode.set_color(ORANGE, sc)   
+        if curNode != g.start: curNode.set_color(BLUE, sc) 
+        elif g.is_station(curNode): curNode.set_color(PURPLE, sc)
+        else: curNode.set_color(ORANGE, sc)   
 
     # Draw path 
     
     drawPath(father, g, sc)
+
+
 
 
 ## Helper
@@ -269,3 +321,24 @@ def drawPath(listFather, g: SearchSpace, sc: pygame.Surface):
         pygame.draw.line(sc, WHITE, (x_start, y_start), (x_end, y_end), 3)
         pygame.display.update()
         pygame.time.delay(30)   
+
+def drawPathForStations(g: SearchSpace, sc: pygame.Surface, father: list, start_id: int, end_id: int):
+    path = []
+    temp = end_id
+    while temp != start_id:
+        path.append(temp)
+        temp = father[temp]
+    path.append(start_id)  # add start to the path
+    path.reverse()
+
+    for pathNode in path:
+        center = g.grid_cells[pathNode].rect.width // 2
+        x_start = g.grid_cells[pathNode].rect.x + center
+        y_start = g.grid_cells[pathNode].rect.y + center
+        if father[pathNode] != -1:
+            x_end = g.grid_cells[father[pathNode]].rect.x + center
+            y_end = g.grid_cells[father[pathNode]].rect.y + center
+            # draw
+            pygame.draw.line(sc, WHITE, (x_start, y_start), (x_end, y_end), 3)
+            pygame.display.update()
+            pygame.time.delay(30)

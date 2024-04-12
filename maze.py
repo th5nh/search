@@ -53,14 +53,16 @@ class SearchSpace:
         self.start._set_color(ORANGE)
         
         self.station_1:Node = self.grid_cells[station_1_id]
-        self.station_1.is_brick = False
         self.station_1.id = station_1_id
+        self.station_1.is_brick = False     
         self.station_1._set_color(GREEN)
+        self.station_1.reached = False  # Add this line
         
         self.station_2:Node = self.grid_cells[station_2_id]
-        self.station_2.is_brick = False
         self.station_2.id = station_2_id
+        self.station_2.is_brick = False
         self.station_2._set_color(GREEN)
+        self.station_2.reached = False  # Add this line
         
         self.goal:Node = self.grid_cells[end_id]
         self.goal.is_brick = False
@@ -98,6 +100,9 @@ class SearchSpace:
 
     def is_goal(self, node:Node):
         return node.id == self.goal.id
+    
+    def is_station(self, node:Node):
+        return node.id == self.station_1.id or node.id == self.station_2.id
 
     def get_neighbors(self, node: Node) -> list[Node]:
         x, y = node.id%self.COLS, node.id//self.COLS
