@@ -80,7 +80,8 @@ class SearchSpace:
 
         #add text to wall : 
 
-        
+    def covert2Dto1D (x , y, col) : 
+        return y*col+ x
 
     def draw(self, sc:pygame.Surface):
         for node in self.grid_cells:
