@@ -6,7 +6,8 @@ class Edge :
         self.start = start
         self.end = end
         self.edgePoints  = self.calculateEdgePoints()
-    def calculateEdgePoints (self) : 
+
+    def calculateEdgePoints (self): 
         x1, y1 = self.start.coor.x, self.start.coor.y
         x2, y2 = self.end.coor.x, self.end.coor.y
         dx = abs(x2 - x1)
@@ -15,6 +16,7 @@ class Edge :
         sy = 1 if y1 < y2 else -1
         err = dx - dy
         edgePoints = []
+
         while x1 != x2 or y1 != y2:
             edgePoints.append(EdgePoint(Coordinate(x1, y1)))
             e2 = 2 * err
@@ -33,14 +35,18 @@ class Edge :
                 if e2 < dx:
                     err += dx
                     y1 += sy
+
         edgePoints.append(EdgePoint(Coordinate(x2, y2)))
         return edgePoints
+    
     def display (self): 
         for point in self.edgePoints:
             point.display()
-    def draw (self, matrix ) : 
-        for point in self.edgePoints  : 
+
+    def draw (self, matrix ): 
+        for point in self.edgePoints: 
             matrix = point.draw(matrix) 
+            
         return matrix
 
 

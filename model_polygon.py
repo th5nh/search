@@ -12,7 +12,7 @@ class Polygon :
             coor1 = Coordinate(coors[i], coors[i+1]) 
             self.vertices.append(VertexPoint(coor1))
         numsOfEdges = 0 
-        for i in range (len(self.vertices)) :
+        for i in range (len(self.vertices)):
             start = self.vertices[i] 
             
             end = self.vertices[i+1] if i < len(self.vertices) - 1  else self.vertices[0] 
@@ -20,31 +20,31 @@ class Polygon :
         
         self.sides = len(self.vertices)
 
-    def copy (self, vertices) : 
+    def copy (self, vertices): 
         self.vertices = vertices
         self.edges = []
         numsOfEdges = 0 
-        for i in range (len(self.vertices)) :
+        for i in range (len(self.vertices)):
             start = self.vertices[i] 
             
             end = self.vertices[i+1] if i < len(self.vertices) - 1  else self.vertices[0] 
             self.edges.append(Edge(start, end))
 
-    def display (self) : 
-        for i in range (self.sides) : 
+    def display (self): 
+        for i in range (self.sides): 
             self.edges[i].display() 
 
-    def draw (self, matrix) : 
-        for i in range (self.sides) : 
+    def draw (self, matrix): 
+        for i in range (self.sides): 
             matrix = self.edges[i].draw(matrix)
-        for v in self.vertices : 
+        for v in self.vertices: 
             matrix = v.draw(matrix) 
         return matrix 
             
-    def __copy__ (self) : 
-        to_copy = Polygon() ; 
-        for ver in self.vertices : 
+    def __copy__ (self): 
+        to_copy = Polygon()
+        for ver in self.vertices: 
             to_copy.vertices.append(copy.copy(ver)) 
-        for edge in self.edges : 
+        for edge in self.edges: 
             to_copy.edges.append(copy.copy(edge)) 
             

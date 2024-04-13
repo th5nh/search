@@ -7,7 +7,8 @@ class Wall :
         self.width = width
         self.borders = self.buildWall()
         self.symbol = '#'
-    def buildWall (self) :
+
+    def buildWall (self):
         borders = []
         #build bot  
         y = 0
@@ -27,11 +28,12 @@ class Wall :
             borders.append(WallPoint(Coordinate(x,i)))
         return borders
         
-    def display (self) : 
-        for point in self.borders : 
+    def display (self): 
+        for point in self.borders: 
             point.display()
-    def draw (self, matrix) : 
-        for point in self.borders : 
+
+    def draw (self, matrix): 
+        for point in self.borders: 
             matrix = point.draw(matrix)
         return matrix
 

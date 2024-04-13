@@ -1,7 +1,7 @@
 import pygame
 from maze import SearchSpace
 from algos import DFS, BFS, UCS, AStar, Greedy, BFSWithStations, Moving
-from const import GREY, BOUND , A1
+from const import GREY
 from model_matrix import Matrix
 import argparse
 import os
@@ -9,16 +9,17 @@ import sys
 script_directory = os.path.dirname(os.path.abspath(sys.argv[0])) 
 
 def main(algo:str, inputFile: str = 'input.txt'):
-    your_name = 'Nguyen Vu Thanh - 21120335'
     pygame.init()
-    pygame.display.set_caption(f'{your_name} - {algo}')
 
     #initialize map 
     myMatrix = Matrix()
     myMatrix.parseFile(script_directory + "\\input_files\\"+ inputFile)
-    COLS, ROWS= myMatrix.width+1, myMatrix.height+1
-    #RES = WIDTH , HEIGHT = 800+2*BOUND + (ROWS-1)*(A1), 800+2*BOUND + (COLS-1)*(A1)
-    RES = WIDTH , HEIGHT = 1350, 700
+
+    your_caption = f'MAP: {myMatrix.height + 1} x {myMatrix.width + 1}'
+    
+    pygame.display.set_caption(f'{your_caption} - {algo}')
+
+    RES = (1350, 700) # size of the window
 
     sc = pygame.display.set_mode(RES)
     #print(RES)
