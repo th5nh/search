@@ -1,5 +1,6 @@
 from model_point import EdgePoint 
 from coordinate import Coordinate
+
 class Edge : 
     def __init__(self, start, end) -> None:
         self.start = start
