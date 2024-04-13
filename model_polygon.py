@@ -47,4 +47,3 @@ class Polygon :
             to_copy.vertices.append(copy.copy(ver)) 
         for edge in self.edges: 
             to_copy.edges.append(copy.copy(edge)) 
-            

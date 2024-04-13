@@ -71,4 +71,3 @@ class EndPoint(Point) :
         super().__init__(coor)
         self.color = color 
         self.symbol = 'e'
-

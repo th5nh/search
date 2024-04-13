@@ -48,5 +48,3 @@ class Edge :
             matrix = point.draw(matrix) 
             
         return matrix
-
-

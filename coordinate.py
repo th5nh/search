@@ -22,6 +22,3 @@ class Coordinate :
             return 1 
         
         return 0
-    
-            
-    

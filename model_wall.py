@@ -36,4 +36,3 @@ class Wall :
         for point in self.borders: 
             matrix = point.draw(matrix)
         return matrix
-
