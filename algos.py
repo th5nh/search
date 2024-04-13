@@ -93,6 +93,10 @@ def BFSWithStations(g: SearchSpace, sc: pygame.Surface):
         # Set color for start node, goal node
         startNode.set_color(ORANGE, sc)
         goalNode.set_color(PURPLE, sc)
+        if len(open_set) == 0:
+            print("\tThere is no path to the goal!")
+            pygame.time.delay(1500)
+            exit()
         
         # Get the current node from the open set
         curID = open_set.pop(0)
