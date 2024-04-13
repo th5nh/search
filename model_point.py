@@ -22,7 +22,10 @@ class Point :
             return matrix  
         except : 
             print(self.coor.y, self.coor.x)
-    
+    def moving (self, dis) :
+        self.coor.x = self.x + dis
+        self.x = self.coor.x ; 
+
     #get neighbor 
     def getNeighbour (self, graph:list) : 
         neigbors = []  

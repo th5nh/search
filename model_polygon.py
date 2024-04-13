@@ -19,6 +19,16 @@ class Polygon :
         
         self.sides = len(self.vertices)
 
+    def copy (self, vertices) : 
+        self.vertices = vertices
+        self.edges = []
+        numsOfEdges = 0 
+        for i in range (len(self.vertices)) :
+            start = self.vertices[i] 
+            
+            end = self.vertices[i+1] if i < len(self.vertices) - 1  else self.vertices[0] 
+            self.edges.append(Edge(start, end))
+
     def display (self) : 
         for i in range (self.sides) : 
             self.edges[i].display() 
@@ -28,7 +38,8 @@ class Polygon :
             matrix = self.edges[i].draw(matrix)
         for v in self.vertices : 
             matrix = v.draw(matrix) 
-        return matrix
+        return matrix 
+            
     def __copy__ (self) : 
         to_copy = Polygon() ; 
         for ver in self.vertices : 

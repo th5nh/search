@@ -10,13 +10,16 @@ from model_point import Point
 
 
 class Node:
-    def __init__(self, point, a, id) -> None:
+    def __init__(self, point:Point, a, id) -> None:
         
         self.rect = pygame.Rect(point.x *(A+A1) + BOUND, point.y *(A+A1)+BOUND, a, a)
 
         self.color = point.color
+        self._set_color (self.color)
         self.id = id
         self.is_brick = point.isBlock
+        self.x = point.x
+        self.y = point.y
 
     def draw(self, sc:pygame.Surface) -> None:
         pygame.draw.rect(sc, self.color, self.rect)
@@ -40,12 +43,13 @@ class SearchSpace:
             for j in range(0, self.COLS):
                 # define the brick's appearing
                 node = myMatrix.graph[i][j]
-                self.grid_cells.append(Node(node, A,i*self.COLS + j))
+                index = self.convert2Dto1D(j,i)
+                self.grid_cells.append(Node(node, A,index))
         
-        start_id = myMatrix.startPoint.y*self.COLS+myMatrix.startPoint.x
-        end_id = myMatrix.endPoint.y*self.COLS+myMatrix.endPoint.x
-
-
+        # start_id = myMatrix.startPoint.y*self.COLS+myMatrix.startPoint.x
+        # end_id = myMatrix.endPoint.y*self.COLS+myMatrix.endPoint.x
+        start_id = self.convert2Dto1D(myMatrix.startPoint.x, myMatrix.startPoint.y) 
+        end_id = self.convert2Dto1D(myMatrix.endPoint.x, myMatrix.endPoint.y) 
 
         self.start:Node = self.grid_cells[start_id]
         self.start.id = start_id
@@ -80,8 +84,8 @@ class SearchSpace:
 
         #add text to wall : 
 
-    def covert2Dto1D (x , y, col) : 
-        return y*col+ x
+    def convert2Dto1D (self,x , y) : 
+        return  (y )*self.COLS + x
 
     def draw(self, sc:pygame.Surface):
         for node in self.grid_cells:
@@ -110,18 +114,29 @@ class SearchSpace:
         return node.id == self.station_1.id or node.id == self.station_2.id
 
     def get_neighbors(self, node: Node) -> list[Node]:
-        x, y = node.id%self.COLS, node.id//self.COLS
+        # x, y = node.id%self.COLS, node.id//self.COLS
+        x,y = node.x , node.y
 
         # define the directions of agent
-        up    = (y-1)*self.COLS + x if y-1 >= 0 else None
-        down  = (y+1)*self.COLS + x if y+1 < self.ROWS else None
-        left  = y*self.COLS + (x-1) if x-1 >= 0 else None
-        right = y*self.COLS + (x+1) if x+1 < self.COLS else None
+        # up    = (y-1)*self.COLS + x if y-1 >= 0 else None
+        # down  = (y+1)*self.COLS + x if y+1 < self.ROWS else None
+        # left  = y*self.COLS + (x-1) if x-1 >= 0 else None
+        # right = y*self.COLS + (x+1) if x+1 < self.COLS else None
 
-        left_up = (y-1)*self.COLS + (x-1) if y-1 >= 0 and x-1 >= 0 else None
-        left_down = (y+1)*self.COLS + (x-1) if y+1 < self.ROWS and x-1 >= 0 else None
-        right_up = (y-1)*self.COLS + (x+1) if y-1 >= 0 and x+1 < self.COLS else None
-        right_down = (y+1)*self.COLS + (x+1) if y+1 < self.ROWS and x+1 < self.COLS else None
+        up = self.convert2Dto1D(x,y-1) if y-1 >= 0 else None
+        down = self.convert2Dto1D(x,y+1) if y+1<self.ROWS else None
+        left  =self.convert2Dto1D(x-1,y) if x-1 >= 0 else None
+        right = self.convert2Dto1D(x+1,y)if x+1 < self.COLS else None
+
+        # left_up = (y-1)*self.COLS + (x-1) if y-1 >= 0 and x-1 >= 0 else None
+        # left_down = (y+1)*self.COLS + (x-1) if y+1 < self.ROWS and x-1 >= 0 else None
+        # right_up = (y-1)*self.COLS + (x+1) if y-1 >= 0 and x+1 < self.COLS else None
+        # right_down = (y+1)*self.COLS + (x+1) if y+1 < self.ROWS and x+1 < self.COLS else None
+
+        left_up = self.convert2Dto1D(x-1,y-1) if y-1 >= 0 and x-1 >= 0 else None
+        left_down = self.convert2Dto1D(x-1,y+1) if y+1 < self.ROWS and x-1 >= 0 else None
+        right_up = self.convert2Dto1D(x+1,y-1) if y-1 >= 0 and x+1 < self.COLS else None
+        right_down = self.convert2Dto1D(x+1,y+1) if y+1 < self.ROWS and x+1 < self.COLS else None
 
         directions = [up, down, left, right, left_up, left_down, right_up, right_down]
         # directions = [up, down, left, right]
@@ -131,3 +146,6 @@ class SearchSpace:
                 neighbors.append(self.grid_cells[dir_])
 
         return neighbors
+    
+    def movingPolygon (self) : 
+        pass;

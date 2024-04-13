@@ -41,7 +41,25 @@ class Matrix :
                 self.polygons.append(polygon) ; 
 
             self.graph = self.draw()
-            self.display()
+            #self.display()
+    def movingPolygon (self, dis) :
+        rollback = self.polygons 
+        for i in range(self.numsOfPolygons) :
+            collusion = False
+            vertices = self.polygons[i].vertices 
+            
+            dis += -1*i if (i%2==0) else i
+            for v in vertices : 
+                if v.coor.x + dis > self.width-1 or v.coor.x +dis < 1 :
+                    collusion = True
+                    break
+            
+            if(collusion == False) : 
+                for v in vertices : 
+                    v.moving(dis)
+                self.polygons[i].copy(vertices)
+            
+        self.graph = self.draw()
 
     def draw(self) : 
         graph = [] 
