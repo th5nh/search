@@ -48,12 +48,16 @@ class Matrix :
             collusion = False
             vertices = self.polygons[i].vertices 
             
-            dis += -1*i if (i%2==0) else i
             for v in vertices : 
                 if v.coor.x + dis > self.width-1 or v.coor.x +dis < 1 :
                     collusion = True
                     break
-            
+                new_x = v.coor.x + dis 
+                new_y = v.coor.y 
+                if(self.graph[new_y][new_x].isBlock) :
+                    collusion = True 
+                    break;
+
             if(collusion == False) : 
                 for v in vertices : 
                     v.moving(dis)

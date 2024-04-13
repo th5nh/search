@@ -42,5 +42,4 @@ class Edge :
             matrix = point.draw(matrix) 
         return matrix
 
-start = EdgePoint(Coordinate(4,4))  
-end = EdgePoint(Coordinate(9,5))
+
