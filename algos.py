@@ -77,25 +77,20 @@ def BFS(g: SearchSpace, sc: pygame.Surface):
 
         
 def BFSWithStations(g: SearchSpace, sc: pygame.Surface):
-    # Color for consistency
-    startNode = g.grid_cells[g.start.id]
-    goalNode = g.grid_cells[g.goal.id]
-    
     # Initialize the open set with the start node
     open_set = [g.start.id]
-    
     # Initialize the closed set as empty
     closed_set = []
-    
     # Initialize the father list
     father = [-1]*g.get_length()
     
     collect = 0 # Number of stations collected
     
-    while open_set:
-        # Set color for start node, goal node
-        startNode.set_color(ORANGE, sc)
-        goalNode.set_color(PURPLE, sc)
+    while True:    
+        if len(open_set) == 0:
+            print("\tThere is no path to the goal!")
+            pygame.time.delay(1500)
+            exit()
         
         # Get the current node from the open set
         curID = open_set.pop(0)
@@ -344,6 +339,7 @@ def drawPath(listFather, g: SearchSpace, sc: pygame.Surface):
 
 def drawPathForStations(g: SearchSpace, sc: pygame.Surface, father: list, start_id: int, end_id: int):
     path = []
+    cost = 0
     temp = end_id
     while temp != start_id:
         path.append(temp)
@@ -358,10 +354,15 @@ def drawPathForStations(g: SearchSpace, sc: pygame.Surface, father: list, start_
         if father[pathNode] != -1:
             x_end = g.grid_cells[father[pathNode]].rect.x + center
             y_end = g.grid_cells[father[pathNode]].rect.y + center
+            if x_start == x_end or y_start == y_end:
+                cost += 10
+            else:
+                cost += 14
             # draw
             pygame.draw.line(sc, BLACK, (x_start, y_start), (x_end, y_end), 3)
             pygame.display.update()
             pygame.time.delay(30)
+    print(f"# Cost of result: {cost}")
 
 def drawPathMoving(listFather, g: SearchSpace, sc: pygame.Surface):
     res = []
