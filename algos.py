@@ -10,7 +10,8 @@ def DFS(g: SearchSpace, sc: pygame.Surface):
     while True:
         # if there is no node in open_set to get (no path to the goal) -> wait 1.5 second then quit
         if len(open_set) == 0:
-            print("\tThere is no path to the goal!")
+            print("# There is no path to the goal!")
+            print("# Cost of result: 0")
             pygame.time.delay(1500)
             exit()
         # (else) get current node in open_set
@@ -45,7 +46,8 @@ def BFS(g: SearchSpace, sc: pygame.Surface):
     while True:
         # if there is no node in open_set to get (no path to the goal) -> wait 1.5 second then quit
         if len(open_set) == 0:
-            print("\tThere is no path to the goal!")
+            print("# There is no path to the goal!")
+            print("# Cost of result: 0")
             pygame.time.delay(1500)
             exit()
         # (else) get current node in open_set
@@ -151,7 +153,8 @@ def UCS(g: SearchSpace, sc: pygame.Surface):
     while True:
         # if there is no node in open_set to get (no path to the goal) -> wait 1.5 second then quit
         if len(open_set) == 0:
-            print("\tThere is no path to the goal!")
+            print("# There is no path to the goal!")
+            print("# Cost of result: 0")
             pygame.time.delay(1500)
             exit()
         # (else) get current node in open_set
@@ -206,7 +209,8 @@ def AStar(g: SearchSpace, sc: pygame.Surface):
     while True:
         # if there is no node in open_set to get (no path to the goal) -> wait 1.5 second then quit
         if len(open_set) == 0:
-            print("\tThere is no path to the goal!")
+            print("# There is no path to the goal!")
+            print("# Cost of result: 0")
             pygame.time.delay(1500)
             exit()
         # (else) get current node in open_set
@@ -247,7 +251,6 @@ def AStar(g: SearchSpace, sc: pygame.Surface):
         closed_set.append(curNode.id)
         curNode.set_color(BLUE, sc) if curNode != g.start else curNode.set_color(ORANGE, sc)       
     # Draw path 
-    print(cost[g.goal.id])
     drawPath(father, g, sc)
 
 
@@ -265,7 +268,8 @@ def Greedy(g: SearchSpace, sc: pygame.Surface):
     while True:
         # if there is no node in open_set to get (no path to the goal) -> wait 1.5 second then quit
         if len(open_set) == 0:
-            print("\tThere is no path to the goal!")
+            print("# There is no path to the goal!")
+            print("# Cost of result: 0")
             pygame.time.delay(1500)
             exit()
         # (else) get current node in open_set
@@ -300,40 +304,45 @@ def Greedy(g: SearchSpace, sc: pygame.Surface):
 
 
 ## Helper
-# Get distance between two node, heuristic: '10' for up down left right, '14' for left_up left_down right_up right_down
+# Get distance between two node: heuristic
 def getDistance(A, B):
     disX = abs(B.rect.x - A.rect.x)
     disY = abs(B.rect.y - A.rect.y)
-    if disX > disY:
-        return 14 * disY + 10 * (disX-disY)
-    else:
-        return 14 * disX + 10 * (disY-disX)
+    return (disX**2 + disY**2)**0.5
 
-# Draw path according to father list (draw from the goal to the start node)
+#Draw path according to father list (draw from the goal to the start node)
 def drawPath(listFather, g: SearchSpace, sc: pygame.Surface):
-    print ('Drawing path')
-    # pathNode = g.get_length() -1 
+    res = []
+    cost = 0
     pathNode = g.goal.id
-    # for i in range(10):
     while True:
         if (pathNode == g.start.id): # loop condition
             break
-        # value to align center of the rectangle 26 x 26
-        center = abs(g.start.rect.x - g.grid_cells[1].rect.x) / 2 # that is 13
-        # start node
+        #value to align center of the rectangle 26 x 26
+        center = A / 2 # that is 13
+        #start node
         x_start = g.grid_cells[pathNode].rect.x + center
         y_start = g.grid_cells[pathNode].rect.y + center
-        # father of start node
+        #father of start node
         pathNode = listFather[pathNode]
-        # father node (end node)
+        #father node (end node)
         x_end = g.grid_cells[pathNode].rect.x + center
         y_end = g.grid_cells[pathNode].rect.y + center
-        # draw
-        pygame.draw.line(sc, WHITE, (x_start, y_start), (x_end, y_end), 3)
+
+        res.append((x_start, y_start, x_end, y_end))
+    
+    # draw
+    for i in reversed(res):
+        if (i[0] == i[2] or i[1] == i[3]):
+            cost += 10
+        else:
+            cost += 14
+
+        pygame.draw.line(sc, WHITE, (i[2], i[3]), (i[0], i[1]), 2)
+        pygame.time.delay(10)
         pygame.display.update()
-        pygame.time.delay(30)   
 
-
+    print(f"# Cost of result: {cost}")
 
 def drawPathForStations(g: SearchSpace, sc: pygame.Surface, father: list, start_id: int, end_id: int):
     path = []

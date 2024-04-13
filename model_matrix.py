@@ -41,7 +41,7 @@ class Matrix :
                 self.polygons.append(polygon) ; 
 
             self.graph = self.draw()
-            self.display()
+            #self.display()
 
     def draw(self) : 
         graph = [] 
