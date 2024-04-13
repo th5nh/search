@@ -455,7 +455,7 @@ def AStarMoving(g: SearchSpace, sc: pygame.Surface):
 
 
 def Moving (myMatrix : Matrix, sc:pygame.surface) : 
-    diss = [1,2,3,4]
+    diss = [1,2]
     for i in range(20) : 
         dis = random.choice(diss)
         if(i%2 ==0) :
