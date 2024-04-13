@@ -1,6 +1,6 @@
 import pygame
 from maze import SearchSpace
-from algos import DFS, BFS, UCS, AStar, Greedy, BFSWithStations
+from algos import DFS, BFS, UCS, AStar, Greedy, BFSWithStations, Moving
 from const import GREY, BOUND , A1
 from model_matrix import Matrix
 import argparse
@@ -42,6 +42,8 @@ def main(algo:str, inputFile: str = 'input.txt'):
         Greedy(g, sc)
     elif algo == 'BFSWITHSTATIONS':
         BFSWithStations(g,sc)
+    elif algo == 'MOVING' : 
+        Moving(myMatrix,sc)
     else:
         raise NotImplementedError('Not implemented')
 
