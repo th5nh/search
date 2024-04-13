@@ -34,12 +34,15 @@ class Matrix:
                 #defin wall 
             self.border = Wall(self.height, self.width)
 
-            #add polygons  
+            #add polygons 
             self.polygons = [] 
-            self.numsOfPolygons = int (lines[2]) 
-            for i in range (self.numsOfPolygons) : 
-                polygon = Polygon(lines[i+3].split(','))
-                self.polygons.append(polygon) ; 
+            if (len(lines) > 2):
+                self.numsOfPolygons = int (lines[2]) 
+                for i in range (self.numsOfPolygons): 
+                    polygon = Polygon(lines[i+3].split(','))
+                    self.polygons.append(polygon)
+            else:
+                self.numsOfPolygons = 0
 
             self.graph = self.draw()
             #self.display()

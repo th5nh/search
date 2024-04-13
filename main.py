@@ -15,7 +15,7 @@ def main(algo:str, inputFile: str = 'input.txt'):
     myMatrix = Matrix()
     myMatrix.parseFile(script_directory + "\\input_files\\"+ inputFile)
 
-    your_caption = f'MAP: {myMatrix.height + 1} x {myMatrix.width + 1}'
+    your_caption = f'Space: {myMatrix.height + 1} x {myMatrix.width + 1}'
     
     pygame.display.set_caption(f'{your_caption} - {algo}')
 

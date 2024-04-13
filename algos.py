@@ -273,7 +273,6 @@ def BFSWithStations(g: SearchSpace, sc: pygame.Surface):
             cost += drawPathForStations(g, sc, father, g.start.id, curNode.id)
             closed_set = []
             father = [-1]*g.get_length()
-            father[curNode.id] = curID
             g.start = curNode
             open_set = [curNode.id]
             collect = collect + 1
@@ -380,8 +379,8 @@ def drawPath(listFather, g: SearchSpace, sc: pygame.Surface):
     while True:
         if (pathNode == g.start.id): # loop condition
             break
-        #value to align center of the rectangle 26 x 26
-        center = A / 2 # that is 13
+        #value to align center of the rectangle 
+        center = A / 2 
         #start node
         x_start = g.grid_cells[pathNode].rect.x + center
         y_start = g.grid_cells[pathNode].rect.y + center
@@ -418,7 +417,7 @@ def drawPathForStations(g: SearchSpace, sc: pygame.Surface, father: list, start_
     path.reverse()
 
     for pathNode in path:
-        center = g.grid_cells[pathNode].rect.width // 2
+        center = A / 2
         x_start = g.grid_cells[pathNode].rect.x + center
         y_start = g.grid_cells[pathNode].rect.y + center
         if father[pathNode] != -1:
@@ -457,8 +456,8 @@ def drawPathMoving(listFather, g: SearchSpace, sc: pygame.Surface):
     while True:
         if (pathNode == g.start.id): # loop condition
             break
-        #value to align center of the rectangle 26 x 26
-        center = A / 2 # that is 13
+        #value to align center of the rectangle
+        center = A / 2 
         #start node
         x_start = g.grid_cells[pathNode].rect.x + center
         y_start = g.grid_cells[pathNode].rect.y + center
