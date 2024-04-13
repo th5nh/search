@@ -2,6 +2,7 @@ from coordinate import Coordinate
 from model_point import EdgePoint , VertexPoint 
 from model_edge import Edge
 import copy
+
 class Polygon : 
     def __init__(self, coors) -> None:
         # An array of vertices that have VertexPo

@@ -1,5 +1,6 @@
 from model_point import WallPoint
 from coordinate import Coordinate
+
 class Wall : 
     def __init__(self, height = 1, width = 1) -> None:
         self.height = height

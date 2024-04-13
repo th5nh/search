@@ -1,6 +1,7 @@
 from coordinate import Coordinate
 from const import *
 import copy
+
 class Point : 
     def __init__(self, coor = Coordinate()) :
         self.coor = coor
@@ -47,6 +48,7 @@ class Point :
                 delta_x += 1 
             delta_y += 1 
         return neigbors
+    
     def compare (self, point ) :
         return self.coor.compare(point.coor) ;
     def distance_step (self , point) : 

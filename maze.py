@@ -1,13 +1,7 @@
 import pygame
 from const import *
-import random
 from model_matrix import Matrix
 from model_point import Point
-
-# you can change the random seed but when you submit your work, it should be run on my random seed!
-# random.seed(2345)
-
-
 
 class Node:
     def __init__(self, point:Point, a, id) -> None:
