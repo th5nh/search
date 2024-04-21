@@ -436,7 +436,7 @@ def drawPathForStations(g: SearchSpace, sc: pygame.Surface, father: list, start_
 
 def Moving (myMatrix : Matrix, sc:pygame.surface) : 
     diss = [1,2]
-    for i in range(20) : 
+    for i in range(200) : 
         dis = random.choice(diss)
         if(i%2 ==0) :
             myMatrix.movingPolygon(dis) 
